@@ -1,0 +1,20 @@
+{
+  "tableKeys": {
+    "xpath": "//div[contains(@class, 'AdOverview')]/ul/li",
+    "attrib": "value",
+    "method": "text"
+  },
+  "tableValues": {
+    "xpath": "//div[contains(@class, 'AdOverview')]/ul/li/strong",
+    "attrib": "value",
+    "method": "text"
+  },
+  "json_script": {
+    "xpath": "//body/div/script[@type='application/ld+json']",
+    "attrib": "value"
+  },
+  "id": {
+    "xpath": "//div[contains(text(), 'Nr')]",
+    "attrib": "value"
+  }
+}
