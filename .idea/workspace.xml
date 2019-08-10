@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ca859a3-7a49-435a-a9e0-5bfbccc0ef80" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crawlers/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -128,18 +129,6 @@
             </path>
             <path>
               <item name="olx_spiderzz" type="b2602c69:ProjectViewProjectNode" />
-              <item name="olx_spiderzz" type="462c0819:PsiDirectoryNode" />
-              <item name="crawlers" type="462c0819:PsiDirectoryNode" />
-              <item name="crawlers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="olx_spiderzz" type="b2602c69:ProjectViewProjectNode" />
-              <item name="olx_spiderzz" type="462c0819:PsiDirectoryNode" />
-              <item name="crawlers" type="462c0819:PsiDirectoryNode" />
-              <item name="scraped" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="olx_spiderzz" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
             <path>
@@ -167,7 +156,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Confirmation" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -301,18 +290,25 @@
       <option name="presentableId" value="Default" />
       <updated>1565026983766</updated>
     </task>
+    <task id="LOCAL-00001" summary="Initial push">
+      <created>1565462253864</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1565462253864</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="1273" y="0" width="1294" height="1047" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25769854" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="Python Console" order="1" sideWeight="0.49918962" weight="0.32932165" />
-      <window_info anchor="bottom" id="Terminal" order="2" weight="0.32932165" />
+      <window_info anchor="bottom" id="Terminal" order="2" visible="true" weight="0.32932165" />
       <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.50162077" side_tool="true" weight="0.32932165" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.32932165" />
@@ -327,6 +323,10 @@
       <window_info anchor="right" id="R Graphics" order="3" />
       <window_info anchor="right" id="R Packages" order="4" />
     </layout>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial push" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial push" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
