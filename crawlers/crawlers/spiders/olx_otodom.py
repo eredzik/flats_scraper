@@ -16,7 +16,7 @@ class OlxOtodomSpider(scrapy.Spider):
     site_map = load_json(os.path.join(path, 'site_map_main.json'))
     olx_map = load_json(os.path.join(path, 'site_map_olx.json'))
     otodom_map = load_json(os.path.join(path, 'site_map_otodom.json'))
-    max_sites = 3
+    max_sites = 1
     yielded_sites = 0
 
     def parse(self, response):
