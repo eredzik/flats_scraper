@@ -1,2 +1,3 @@
-crawlers/scraped
 crawlers/.scrapy
+*.csv
+*.json

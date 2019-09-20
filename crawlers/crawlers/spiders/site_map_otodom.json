@@ -1,11 +1,11 @@
 {
   "tableKeys": {
-    "xpath": "//div[contains(@class, 'AdOverview')]/ul/li",
+    "xpath": "//section[contains(@class, 'section-overview')]//ul/li",
     "attrib": "value",
     "method": "text"
   },
   "tableValues": {
-    "xpath": "//div[contains(@class, 'AdOverview')]/ul/li/strong",
+    "xpath": "//section[contains(@class, 'section-overview')]//ul/li/strong",
     "attrib": "value",
     "method": "text"
   },

@@ -1,6 +1,7 @@
 import json
 import csv
 import time
+from run_scraping import run_scraper
 
 timestr = time.strftime("%Y%m%d-%H%M%S")
 csv_name = 'scraped/scraped_'+timestr+'.csv'
@@ -26,5 +27,5 @@ def process_to_csv(json_file, csv_file):
             writer.writerow(to_save)
 
 
-run_scraper(json_name)
+json_name = run_scraper(timestr)
 process_to_csv(json_name, csv_name)
