@@ -1,6 +1,7 @@
 crawlers/.scrapy
 *.csv
-*.json
 crawlers/__pycache__
 crawlers/crawlers/__pycache__
 crawlers/crawlers/spiders/__pycache__
+scraped
+crawlers/crawlers/output.json

@@ -1,0 +1,42 @@
+{
+  "tableKeys": {
+    "xpath": "//table[@class='item']//tr/th",
+    "attrib": "value"
+  },
+  "tableValues": {
+    "xpath": " //table[@class='item']//td[@class='value']/strong[count(*)>0]/a | //table[@class='item']//td[@class='value']/strong[count(*)=0]",
+    "attrib": "value"
+  },
+  "description": {
+    "xpath": "//div[@id='textContent']",
+    "attrib": "value"
+  },
+  "price": {
+    "xpath": "//div[@class='price-label']/strong",
+    "attrib": "value"
+  },
+  "phone_number": {
+    "xpath": "//div[@data-rel='phone']",
+    "attrib": "class"
+  },
+  "views": {
+    "xpath": "//div[@class='pdingtop10']/strong",
+    "attrib": "value"
+  },
+  "location": {
+    "xpath": "//address/p",
+    "attrib": "value"
+  },
+  "latitude": {
+    "xpath": "//div[@id='mapcontainer']",
+    "attrib": "data-lat"
+  },
+  "longitude": {
+    "xpath": "//div[@id='mapcontainer']",
+    "attrib": "data-lon"
+  },
+  "id": {
+    "xpath": " //small[contains(text(),'ID')]",
+    "attrib": "value"
+  }
+}
