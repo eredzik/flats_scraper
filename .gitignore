@@ -1,5 +1,4 @@
 crawlers/.scrapy
-*.csv
 crawlers/__pycache__
 crawlers/crawlers/__pycache__
 crawlers/crawlers/spiders/__pycache__
