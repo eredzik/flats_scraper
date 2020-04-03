@@ -15,7 +15,7 @@ get==2019.4.13
 h11==0.8.1
 h2==3.1.1
 hpack==3.0.0
-http-client==0.1.22
+#http-client==0.1.22
 http3==0.6.7
 hyperframe==5.2.0
 hyperlink==19.0.0
@@ -33,7 +33,7 @@ py==1.8.0
 pyasn1==0.4.6
 pyasn1-modules==0.2.6
 pycparser==2.19
-pycurl==7.43.0.3
+#pycurl==7.43.0.3
 PyDispatcher==2.0.5
 PyHamcrest==1.9.0
 pyOpenSSL==19.0.0

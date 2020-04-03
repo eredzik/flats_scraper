@@ -1,5 +1,6 @@
 import json
 import csv
+from json import JSONDecodeError
 import time
 from run_scraping import run_scraper
 
@@ -9,7 +10,11 @@ csv_name = 'scraped/scraped_'+timestr+'.csv'
 
 def process_to_csv(json_file, csv_file):
     with open(json_file, 'rb') as f:
-        json_crawled = json.loads(f.read())
+        try:
+            json_crawled = json.loads(f.read())
+        except JSONDecodeError:
+            print("Nothing scraped, check scraper")
+            return
 
     unique_keys = set()
     for ad in json_crawled:
