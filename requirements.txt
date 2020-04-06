@@ -1,0 +1,4 @@
+scrapy>=1.6.0
+lxml
+pywin32
+pandas
