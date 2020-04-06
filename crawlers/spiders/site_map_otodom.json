@@ -16,5 +16,9 @@
   "id": {
     "xpath": "//div[contains(text(), 'Nr')]",
     "attrib": "value"
+  },
+  "posted_by":{
+    "xpath": "//div[@class='css-1gjwmw9']",
+    "attrib": "value"
   }
 }

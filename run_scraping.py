@@ -4,6 +4,7 @@ from crawlers.spiders.olx_otodom import OlxOtodomSpider
 from pathlib import Path
 import time
 import os
+import pandas as pd
 
 
 def run_scraper(timestr):
@@ -19,3 +20,11 @@ def run_scraper(timestr):
     process.crawl(OlxOtodomSpider)
     process.start()
     return(output)
+
+if __name__ == '__main__':
+    timestr = time.strftime("%Y%m%d-%H%M%S")
+    csv_file = 'scraped/scraped_'+timestr+'.csv'
+
+    json_file = run_scraper(timestr)
+    df = pd.read_json(json_file)
+    df.to_csv(csv_file, sep='\t')
