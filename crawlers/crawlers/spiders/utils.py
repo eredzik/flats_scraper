@@ -40,6 +40,7 @@ def scrap_from_map(site, mapping):
     scraped_data = {}
     found = None
     for map_id, map_keys in mapping.items():
+        print(map_id, map_keys)
         try:
             if map_keys['attrib'] == 'value':
                 found = [str(content.text).replace('\n', '').replace('\t', '').replace('\r', '')

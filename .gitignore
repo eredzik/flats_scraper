@@ -1,3 +1,10 @@
 crawlers/.scrapy
 *.csv
 *.json
+.venv
+.vscode
+.gitpod.Dockerfile
+.gitpod.yml
+.idea/
+.ipynb_checkpoints/
+__pycache__/

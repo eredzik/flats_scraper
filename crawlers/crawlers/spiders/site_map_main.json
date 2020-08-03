@@ -4,7 +4,7 @@
     "attrib": "href"
   },
   "nextPage": {
-    "xpath": "//span[contains(@class,'fbold next abs large')]/a",
+    "xpath": "//span[contains(@class,'link page')]",
     "attrib": "href"
   }
 }

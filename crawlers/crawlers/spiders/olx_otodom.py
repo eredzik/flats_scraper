@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from .utils import scrap_from_map, load_json, append_to_dict
+from crawlers.spiders.utils import scrap_from_map, load_json, append_to_dict
 import os
 import re
 from lxml import html
@@ -16,17 +16,18 @@ class OlxOtodomSpider(scrapy.Spider):
     site_map = load_json(os.path.join(path, 'site_map_main.json'))
     olx_map = load_json(os.path.join(path, 'site_map_olx.json'))
     otodom_map = load_json(os.path.join(path, 'site_map_otodom.json'))
-    max_sites = 100
+    max_sites = 1
     yielded_sites = 0
 
     def parse(self, response):
         hxs = html.fromstring(response.text)
+        #print(response.text)
         if self.yielded_sites < self.max_sites:
             result = scrap_from_map(hxs, self.site_map)
             self.yielded_sites += 1
             for url in result['ads']:
                 parsed_url = urlparse(url)
-                # print(parsed_url)
+                #print(parsed_url)
                 if parsed_url.netloc == 'www.olx.pl':
                     # pass
                     yield scrapy.Request(url=url, callback=self.parse_olx)

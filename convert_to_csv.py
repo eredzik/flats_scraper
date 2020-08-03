@@ -1,10 +1,32 @@
+
+import os
+import time
 import json
 import csv
 import time
-from run_scraping import run_scraper
+
+# from scrapy.crawler import CrawlerProcess
+# from scrapy.utils.project import get_project_settings
+# from crawlers.crawlers.spiders.olx_otodom import OlxOtodomSpider
 
 timestr = time.strftime("%Y%m%d-%H%M%S")
 csv_name = 'scraped/scraped_'+timestr+'.csv'
+
+
+def run_scraper(timestr):
+    # timestr = time.strftime("%Y%m%d-%H%M%S")
+    output = 'D:\\flats_scraper\\flats_scraper\\scraped\\scraped_' + timestr + '.json'
+    os.makedirs("scraped", exist_ok=True)
+    # settings = get_project_settings()
+    # settings['FEED_FORMAT'] = 'json'
+    # settings['FEED_URI'] = output
+    # process = CrawlerProcess(settings)
+    # process.crawl(OlxOtodomSpider)
+    # process.start()
+    os.chdir("D:\\\\\\flats_scraper\\flats_scraper\\crawlers\\crawlers")
+    print(output)
+    os.system("scrapy crawl olx_otodom -o {0}".format(output))
+    return(output)
 
 
 def process_to_csv(json_file, csv_file):
