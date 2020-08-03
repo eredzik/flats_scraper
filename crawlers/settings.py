@@ -17,7 +17,6 @@ NEWSPIDER_MODULE = 'crawlers.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agen
 USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
-
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 FEED_EXPORT_ENCODING = "utf-8"

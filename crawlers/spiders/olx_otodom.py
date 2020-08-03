@@ -16,7 +16,7 @@ class OlxOtodomSpider(scrapy.Spider):
     site_map = load_json(os.path.join(path, 'site_map_main.json'))
     olx_map = load_json(os.path.join(path, 'site_map_olx.json'))
     otodom_map = load_json(os.path.join(path, 'site_map_otodom.json'))
-    max_sites = 1
+    max_sites = 5
     yielded_sites = 0
 
     def parse(self, response):
@@ -107,6 +107,7 @@ class OlxOtodomSpider(scrapy.Spider):
         processed_data['market'] = result.get('Rynek: ')
         processed_data['level'] = result.get('Piętro: ')
         processed_data['decorated'] = result.get('Stan wykończenia: ')
+        processed_data['posted_by'] = result.get('posted_by')
         append_to_dict(processed_data, {k: result[k] for k in
                                         ['url']})
 
