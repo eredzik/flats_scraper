@@ -31,7 +31,7 @@ def load_list(filename, searchstring=''):
     link_set = set()
     with open(filename, 'r') as f:
         for line in f:
-            if (searchstring in line) or searchstring is '':
+            if (searchstring in line) or searchstring == '':
                 link_set.add(line.rstrip('\n'))
     return link_set
 

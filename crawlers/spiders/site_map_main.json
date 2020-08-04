@@ -4,7 +4,7 @@
     "attrib": "href"
   },
   "nextPage": {
-    "xpath": "//span[contains(@class,'link page')]",
+    "xpath": "//a[@data-cy='page-link-next']",
     "attrib": "href"
   }
 }
