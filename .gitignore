@@ -11,3 +11,4 @@ __pycache__/
 alembic/versions/
 dask-worker-space/
 sqlite.db
+*.log

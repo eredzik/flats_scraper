@@ -1,19 +1,19 @@
+import json
 import re
 from datetime import datetime, timedelta
-import json
 
 import requests
 from lxml import html
-from prefect import Flow, Parameter, task, context
+from prefect import Flow, Parameter, context, task
+from prefect.engine.executors.dask import LocalDaskExecutor
 from prefect.engine.signals import SKIP
 from prefect.tasks.control_flow.conditional import switch
 from prefect.utilities.debug import raise_on_exception
-from sqlalchemy import create_engine, desc, or_, and_
+from sqlalchemy import and_, create_engine, desc, or_
 from sqlalchemy.orm import Session
-from prefect.engine.executors.dask import LocalDaskExecutor
 
-import scraper_settings
-from scraper_model import Advertisement, Link, User
+from flats_scraper import scraper_settings
+from flats_scraper.scraper_model import Advertisement, Link, User
 
 
 def parse_olx_time(dt_string):
@@ -25,6 +25,8 @@ def parse_olx_time(dt_string):
 def get_to_parse(limit):
     engine = create_engine(scraper_settings.db_uri)
     session = Session(bind=engine)
+    logger = context.get("logger")
+
     ads = session.query(Link).\
         filter(Link.is_closed.isnot(True)).\
         order_by(Link.last_time_scraped).\
@@ -32,13 +34,12 @@ def get_to_parse(limit):
         all()
     result = {"olx":[], "otodom":[]}
     for ad in ads:
-        print(ad.link_type)
         if ad.link_type == 'olx':
             result['olx'].append((ad.url, ad.id))
         elif ad.link_type == 'otodom':
             result['otodom'].append((ad.url, ad.id))
         else:
-            pass
+            logger.inf
     session.close()
     return result
 
@@ -69,11 +70,12 @@ def scrap_olx_ad(ad):
                       "Umeblowane": "furniture",
                       "Powierzchnia": "size_m2"}
     
-    # if tree.xpath('//*[@id="ad-not-available-box"]/div/h3/strong/text()'):
-    #     link = session.query(Link).get(link_id)
-    #     link.is_closed = True
-    #     session.commit()
-    #     return
+    if tree.xpath('//*[@id="offer_removed_by_user"]') or tree.xpath('//*[@id="offer_outdated"]'):
+        link = session.query(Link).get(link_id)
+        link.is_closed = True
+        session.commit()
+        session.close()
+        return
 
     table_keys = tree.xpath("//ul[@class='offer-details']/li/a/span//text()")
     table_values = tree.xpath("//ul[@class='offer-details']/li/a/strong//text()")
@@ -170,7 +172,13 @@ def scrap_otodom_ad(ad):
     if page.status_code != 200:
         raise Exception("Wrong return code")
     tree = html.fromstring(page.content)
-    
+    if tree.xpath("//div[@id='ad-not-available-box']"):
+        link = session.query(Link).get(link_id)
+        link.is_closed = True
+        logger.info("Closing ad - not available anymore")
+        session.commit()
+        return
+
     json_content = json.loads(tree.xpath('//*[@id="server-app-state"]/text()')[0])
     
     meta_content = json_content['initialProps']['meta']['target']
@@ -184,6 +192,8 @@ def scrap_otodom_ad(ad):
             floor_no = -1
         elif floor_content[0] == 'floor_higher_10':
             floor_no = 11
+        elif floor_content[0] == 'garret':
+            floor_no = 20
         else:
             floor_no = re.findall('\d+', floor_content[0])[0]
     else:
@@ -246,10 +256,13 @@ def scrap_otodom_ad(ad):
         user = user
     )
     session.add(advertisement)
+    link = session.query(Link).get(link_id)
+    link.last_time_scraped = datetime.now()
     session.commit()
     session.close()
+    logger.info("Ad scraped successfully")
 
-with Flow("scrap_olx") as flow:
+with Flow("scrap_olx") as flow_scrap:
     limit = Parameter("limit", default=100)
     ads = get_to_parse(limit)
     results_olx = scrap_olx_ad.map(ads['olx'])
@@ -257,4 +270,4 @@ with Flow("scrap_olx") as flow:
 
 if __name__ == '__main__':
     executor = LocalDaskExecutor()
-    state = flow.run(executor=executor, limit=200)
+    state = flow.run(executor=executor, limit=150)

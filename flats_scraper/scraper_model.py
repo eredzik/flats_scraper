@@ -1,4 +1,4 @@
-from sqlalchemy import MetaData, Integer, String, Unicode, Column, Float, DateTime, ForeignKey, Boolean, PrimaryKeyConstraint
+from sqlalchemy import MetaData, Integer, String, Unicode, Column, Float, DateTime, ForeignKey, Boolean, PrimaryKeyConstraint, UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 metadata = MetaData()
@@ -49,3 +49,5 @@ class Link(Base):
     is_closed = Column(Boolean)
     link_type = Column(String(10), nullable=False)
     advertisement = relationship("Advertisement", backref="advertisements")
+
+    uq_url = UniqueConstraint(url)
