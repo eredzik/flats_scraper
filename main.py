@@ -15,7 +15,7 @@ schedule = IntervalSchedule(
 )
 
 with Flow("data_processing_flow", schedule=schedule) as main_flow:
-    pages_to_scrap = Parameter("pages_to_scrap", default=30)
+    pages_to_scrap = Parameter("pages_to_scrap", default=24)
     ads = get_ads(pages_to_scrap)
     added_links_rc = add_link_to_db(ads) 
 

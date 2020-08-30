@@ -20,14 +20,18 @@ def get_ads(pages_to_scrap, page_to_scrap = None):
     ads = []
     page_to_scrap = 'https://www.olx.pl/nieruchomosci/mieszkania/sprzedaz/warszawa/'
     for _ in range(pages_to_scrap):
-        page = requests.get(page_to_scrap)
-        ads_xpath = "//a[contains(@class,'marginright5 link linkWithHash detailsLink')]"
-        tree = html.fromstring(page.content)
-        for ad in tree.xpath(ads_xpath):
-            ad_clean = re.findall(r'(.*\.html).*',ad.attrib['href'])[0]
-            ads.append(ad_clean)
-        next_site_xpath = "//a[@data-cy='page-link-next']"
-        page_to_scrap = tree.xpath(next_site_xpath)[0].attrib['href']
+        try:
+            page = requests.get(page_to_scrap)
+            ads_xpath = "//a[contains(@class,'marginright5 link linkWithHash detailsLink')]"
+            tree = html.fromstring(page.content)
+            for ad in tree.xpath(ads_xpath):
+                ad_clean = re.findall(r'(.*\.html).*',ad.attrib['href'])[0]
+                ads.append(ad_clean)
+            next_site_xpath = "//a[@data-cy='page-link-next']"
+            page_to_scrap = tree.xpath(next_site_xpath)[0].attrib['href']
+        except:
+            with open("exceptions/dump.html", "wb") as f:
+                f.write(page.content)
         
 
     return ads

@@ -12,3 +12,4 @@ alembic/versions/
 dask-worker-space/
 sqlite.db
 *.log
+exceptions/
