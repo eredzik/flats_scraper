@@ -1,4 +1,3 @@
-import setproctitle
 from datetime import datetime, timedelta
 
 from prefect import Flow, Parameter
@@ -25,7 +24,6 @@ with Flow("data_processing_flow", schedule=schedule) as main_flow:
     results_olx = scrap_olx_ad.map(ads['olx'])
     results_otodom = scrap_otodom_ad.map(ads['otodom'])
     
-setproctitle.setproctitle('test_title')
 main_flow.run(executor=LocalDaskExecutor())
 # main_flow.visualize()
 

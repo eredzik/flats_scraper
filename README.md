@@ -9,5 +9,10 @@ To run the scraper:
 
     pip install -r requirements.txt
     python run_scraping.py
+
+On windows powershell in background with saving logs to file:
+
+    pip install -r requirements.txt
+    ./main.ps1
     
 Results will be saved in "scraped" directory.
