@@ -23,7 +23,7 @@ setup(
     version=version,
     author='Emil Redzik',
     author_email='emilredzik1994@gmail.com',
-    url='https://github.com/fabiommendes/python-boilerplate',
+    url='https://github.com/eredzik/flats_scraper',
     description='Creates the skeleton of your Python project.',
     long_description=open('README.md').read(),
     classifiers=[
@@ -41,5 +41,6 @@ setup(
     install_requires=[
         'sqlalchemy',
         'alembic',
+        'prefect',
     ],
 )
