@@ -1,7 +1,8 @@
+import os
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from dotenv import find_dotenv, load_dotenv
+from sqlalchemy import engine_from_config, pool
 
 from alembic import context
 
@@ -9,18 +10,27 @@ from alembic import context
 # access to the values within the .ini file in use.
 config = context.config
 
+load_dotenv(find_dotenv())
+
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 fileConfig(config.config_file_name)
+section = config.config_ini_section
+config.set_section_option(section, "POSTGRES_USER", os.environ.get("POSTGRES_USER"))
+config.set_section_option(section, "POSTGRES_PASSWORD", os.environ.get("POSTGRES_PASSWORD"))
 
+
+import os
 # add your model's MetaData object here
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 # target_metadata = None
-import sys, os
+import sys
+
 sys.path.append(os.getcwd())
 from flats_scraper import scraper_model
+
 target_metadata = scraper_model.metadata
 
 # other values from the config, defined by the needs of env.py,

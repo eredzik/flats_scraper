@@ -1,0 +1,15 @@
+version: '3'
+services:
+    mydb:
+        image: "postgres"
+        env_file:
+            - ".env"
+        environment:
+            POSTGRES_DB=flats_scraper_db
+        volumes:
+                - pgdata:/var/lib/postgresql/data
+        ports:
+                - "5433:5432"
+
+volumes:
+        pgdata:

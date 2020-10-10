@@ -10,7 +10,7 @@ from flats_scraper.scraping_schedule import get_to_parse, scrap_olx_ad, scrap_ot
 
 schedule = IntervalSchedule(
     start_date=datetime.utcnow() + timedelta(seconds=1),
-    interval=timedelta(hours=1),
+    interval=timedelta(minutes=30),
 )
 
 with Flow("data_processing_flow", schedule=schedule) as main_flow:
@@ -20,10 +20,9 @@ with Flow("data_processing_flow", schedule=schedule) as main_flow:
 
     limit = Parameter("limit", default=400)
     
-    ads = get_to_parse(limit, upstream_tasks=[added_links_rc])
+    ads = get_to_parse(limit, added_links_rc)
     results_olx = scrap_olx_ad.map(ads['olx'])
     results_otodom = scrap_otodom_ad.map(ads['otodom'])
-    
-main_flow.run(executor=LocalDaskExecutor())
-# main_flow.visualize()
+    # main_flow.run(executor=LocalDaskExecutor())
+main_flow.register("Flats scraper flow project")
 

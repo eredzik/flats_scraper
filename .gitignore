@@ -1,6 +1,4 @@
 crawlers/.scrapy
-*.csv
-*.json
 .venv
 .vscode
 .gitpod.Dockerfile
@@ -14,3 +12,6 @@ sqlite.db
 *.log
 exceptions/
 .pytest_cache/
+node_modules/
+*.sqbpro
+.env

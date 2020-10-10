@@ -5,13 +5,15 @@ from datetime import datetime, timedelta
 
 import requests
 from lxml import html
-from prefect import Flow, Parameter, context, task
+from prefect import Flow, Parameter, task
+import prefect
 from prefect.engine.executors.dask import LocalDaskExecutor
 from prefect.engine.signals import SKIP
 from prefect.tasks.control_flow.conditional import switch
 from prefect.utilities.debug import raise_on_exception
 from sqlalchemy import and_, create_engine, desc, or_
 from sqlalchemy.orm import Session
+from sqlalchemy.pool import StaticPool
 
 from flats_scraper import scraper_settings
 from flats_scraper.scraper_model import Advertisement, Link, User
@@ -22,11 +24,11 @@ def parse_olx_time(dt_string):
     hour, minute, day, month, year = re.findall(r".*(\d{1,2}):(\d{1,2}).\s(\d{1,2})\s(\w+)\s(\d{4})", dt_string)[0]
     return datetime(int(year), str_to_month[month], int(day), hour = int(hour), minute = int(minute))
 
-@task
-def get_to_parse(limit):
-    engine = create_engine(scraper_settings.db_uri)
+@task()
+def get_to_parse(limit, _):
+    engine = create_engine(scraper_settings.db_uri, connect_args={'check_same_thread':False}, poolclass=StaticPool)
     session = Session(bind=engine)
-    logger = context.get("logger")
+    logger = prefect.context.get("logger")
 
     ads = session.query(Link).\
         filter(Link.is_closed.isnot(True)).\
@@ -45,7 +47,7 @@ def get_to_parse(limit):
     return result
 
 def get_number_from_string(string):
-    return float("".join(re.findall('(\d*,?\d+)',string)).replace(",", "."))
+    return float("".join(re.findall(r'(\d*,?\d+)',string)).replace(",", "."))
 
 def parse_mmm_yyyy(string):
     str_to_month = {"sty": 1, "lut": 2, "mar":3, "kwi":4, "maj":5, "cze":6, "lip":7, "sie": 8, "wrz":9, "paź":10, "lis":11, "gru": 12}
@@ -55,9 +57,8 @@ def parse_mmm_yyyy(string):
 @task(max_retries=3, retry_delay = timedelta(seconds=5))
 def scrap_olx_ad(ad):
     html_link, link_id = ad
-    engine = create_engine(scraper_settings.db_uri)
+    engine = create_engine(scraper_settings.db_uri, connect_args={'check_same_thread':False}, poolclass=StaticPool)
     session = Session(bind=engine)
-    logger = context.get("logger")
     page = requests.get(html_link)
     tree = html.fromstring(page.content)
     try:
@@ -171,9 +172,9 @@ def scrap_olx_ad(ad):
 @task(max_retries=3, retry_delay = timedelta(seconds=5))
 def scrap_otodom_ad(ad):
     html_link, link_id = ad
-    engine = create_engine(scraper_settings.db_uri)
+    engine = create_engine(scraper_settings.db_uri, connect_args={'check_same_thread':False}, poolclass=StaticPool)
     session = Session(bind=engine)
-    logger = context.get("logger")
+    logger = prefect.context.get("logger")
     print(f"trying {html_link}")
     page = requests.get(html_link)
     
@@ -204,7 +205,7 @@ def scrap_otodom_ad(ad):
             elif floor_content[0] == 'garret':
                 floor_no = 20
             else:
-                floor_no = re.findall('\d+', floor_content[0])[0]
+                floor_no = re.findall(r'\d+', floor_content[0])[0]
         else:
             floor_no = None
         equipment = meta_content.get('Equipment_types') or []
@@ -275,13 +276,3 @@ def scrap_otodom_ad(ad):
             f.write(page.content)
         with open(f"exceptions/log_error{link_id}.log", 'w') as log:
             traceback.print_exc(file=log)
-
-with Flow("scrap_olx") as flow_scrap:
-    limit = Parameter("limit", default=100)
-    ads = get_to_parse(limit)
-    results_olx = scrap_olx_ad.map(ads['olx'])
-    results_otodom = scrap_otodom_ad.map(ads['otodom'])
-
-if __name__ == '__main__':
-    executor = LocalDaskExecutor()
-    state = flow.run(executor=executor, limit=150)

@@ -1,0 +1,33 @@
+Metadata-Version: 1.1
+Name: python-boilerplate
+Version: 0.0.1
+Summary: Creates the skeleton of your Python project.
+Home-page: https://github.com/fabiommendes/python-boilerplate
+Author: Fábio Macêdo Mendes
+Author-email: fabiomacedomendes@gmail.com
+License: UNKNOWN
+Description: <h1> OLX and OTODOM flats advertisements scraper </h1>
+        
+        Purpose of this project was to create functional scraper of housing advertisements in Warsaw from site olx.pl and otodom.pl for further analysis of the data for learning purposes.
+        Project uses framework scrapy and saves results as json and csv format.
+        There is also attached example bayesian linear model created on cleaned data from the scraper.
+        
+        <h1> How to run</h1>
+        To run the scraper:
+        
+            pip install -r requirements.txt
+            python run_scraping.py
+        
+        On windows powershell in background with saving logs to file:
+        
+            pip install -r requirements.txt
+            ./main.ps1
+            
+        Results will be saved in "scraped" directory.
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries

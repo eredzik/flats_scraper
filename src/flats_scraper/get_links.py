@@ -1,19 +1,18 @@
-from datetime import datetime
 import re
+from datetime import datetime
 
 import requests
 from lxml import html
-from prefect import Flow, Parameter, task, context
-from prefect.utilities.debug import raise_on_exception
+from prefect import Flow, Parameter, task
+import prefect
 from prefect.engine.executors.dask import LocalDaskExecutor
-
-
+from prefect.utilities.debug import raise_on_exception
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
+from sqlalchemy.pool import StaticPool
 
 import flats_scraper.scraper_settings
 from flats_scraper.scraper_model import Link
-
 
 @task 
 def get_ads(pages_to_scrap, page_to_scrap = None):
@@ -38,9 +37,9 @@ def get_ads(pages_to_scrap, page_to_scrap = None):
 
 @task
 def add_link_to_db(links):
-    engine = create_engine(flats_scraper.scraper_settings.db_uri)
+    engine = create_engine(flats_scraper.scraper_settings.db_uri, connect_args={'check_same_thread':False}, poolclass=StaticPool)
     session = Session(bind=engine)
-    logger = context.get("logger")
+    logger = prefect.context.get("logger")
     to_add = []
     for html in set(links):
         if not session.query(Link).filter(Link.url == html).first():
