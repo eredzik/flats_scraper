@@ -43,6 +43,6 @@ setup(
         'alembic',
         'prefect',
         'lxml',
-        'dotenv',
+        'python-dotenv',
     ],
 )
