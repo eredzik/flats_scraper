@@ -19,10 +19,10 @@ with open(path, 'wb') as F:
 
 setup(
     # Basic info
-    name='python-boilerplate',
+    name='flats_scraper',
     version=version,
-    author='Fábio Macêdo Mendes',
-    author_email='fabiomacedomendes@gmail.com',
+    author='Emil Redzik',
+    author_email='emilredzik1994@gmail.com',
     url='https://github.com/fabiommendes/python-boilerplate',
     description='Creates the skeleton of your Python project.',
     long_description=open('README.md').read(),
