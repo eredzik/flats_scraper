@@ -1,3 +1,4 @@
+import sys
 from datetime import datetime, timedelta
 
 from prefect import Flow, Parameter
@@ -23,6 +24,10 @@ with Flow("data_processing_flow", schedule=schedule) as main_flow:
     ads = get_to_parse(limit, added_links_rc)
     results_olx = scrap_olx_ad.map(ads['olx'])
     results_otodom = scrap_otodom_ad.map(ads['otodom'])
-    # main_flow.run(executor=LocalDaskExecutor())
-main_flow.register("Flats scraper flow project")
+    
+if __name__ == '__main__':
+    if len(sys.argv)>1:
+        main_flow.run(executor=LocalDaskExecutor())
+    else:
+        main_flow.register("Flats scraper flow project")
 

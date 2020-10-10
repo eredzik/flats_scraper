@@ -37,7 +37,7 @@ def get_ads(pages_to_scrap, page_to_scrap = None):
 
 @task
 def add_link_to_db(links):
-    engine = create_engine(flats_scraper.scraper_settings.db_uri)
+    engine = create_engine(flats_scraper.scraper_settings.db_uri, echo=True)
     session = Session(bind=engine)
     logger = prefect.context.get("logger")
     to_add = []
@@ -58,7 +58,7 @@ def add_link_to_db(links):
             
         else:
             logger.info(f"Ignored link {html} - exists")
-    session.bulk_save_objects(to_add)
+    session.bulk_save_objects(to_add, return_defaults=True)
     session.commit()
     session.close()
 

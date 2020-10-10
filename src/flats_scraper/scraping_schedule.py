@@ -31,7 +31,7 @@ def get_to_parse(limit, _):
     logger = prefect.context.get("logger")
 
     ads = session.query(Link).\
-        filter(Link.is_closed.isnot(True)).\
+        filter(Link.is_closed != 1).\
         order_by(Link.last_time_scraped).\
         limit(limit).\
         all()
