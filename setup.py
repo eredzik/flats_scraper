@@ -42,5 +42,6 @@ setup(
         'sqlalchemy',
         'alembic',
         'prefect',
+        'lxml',
     ],
 )
