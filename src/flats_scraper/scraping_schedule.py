@@ -26,7 +26,7 @@ def parse_olx_time(dt_string):
 
 @task()
 def get_to_parse(limit, _):
-    engine = create_engine(scraper_settings.db_uri, connect_args={'check_same_thread':False}, poolclass=StaticPool)
+    engine = create_engine(scraper_settings.db_uri)
     session = Session(bind=engine)
     logger = prefect.context.get("logger")
 
@@ -57,7 +57,7 @@ def parse_mmm_yyyy(string):
 @task(max_retries=3, retry_delay = timedelta(seconds=5))
 def scrap_olx_ad(ad):
     html_link, link_id = ad
-    engine = create_engine(scraper_settings.db_uri, connect_args={'check_same_thread':False}, poolclass=StaticPool)
+    engine = create_engine(scraper_settings.db_uri)
     session = Session(bind=engine)
     page = requests.get(html_link)
     tree = html.fromstring(page.content)
@@ -172,7 +172,7 @@ def scrap_olx_ad(ad):
 @task(max_retries=3, retry_delay = timedelta(seconds=5))
 def scrap_otodom_ad(ad):
     html_link, link_id = ad
-    engine = create_engine(scraper_settings.db_uri, connect_args={'check_same_thread':False}, poolclass=StaticPool)
+    engine = create_engine(scraper_settings.db_uri)
     session = Session(bind=engine)
     logger = prefect.context.get("logger")
     print(f"trying {html_link}")

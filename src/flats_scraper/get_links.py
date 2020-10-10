@@ -37,7 +37,7 @@ def get_ads(pages_to_scrap, page_to_scrap = None):
 
 @task
 def add_link_to_db(links):
-    engine = create_engine(flats_scraper.scraper_settings.db_uri, connect_args={'check_same_thread':False}, poolclass=StaticPool)
+    engine = create_engine(flats_scraper.scraper_settings.db_uri)
     session = Session(bind=engine)
     logger = prefect.context.get("logger")
     to_add = []

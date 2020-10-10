@@ -44,5 +44,6 @@ setup(
         'prefect',
         'lxml',
         'python-dotenv',
+        'psycopg2'
     ],
 )
