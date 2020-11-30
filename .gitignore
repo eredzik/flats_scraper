@@ -14,4 +14,4 @@ exceptions/
 .pytest_cache/
 node_modules/
 *.sqbpro
-.env
+*.env
