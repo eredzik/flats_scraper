@@ -24,7 +24,7 @@ services:
             POSTGRES_PASSWORD: "${AIRFLOW_DB_PASSWORD}"
             POSTGRES_DB: "${AIRFLOW_DB_DATABASE}"
     airflow:
-        build: ./airflow-engine
+        build: ./airflow-engine/
         # restart: always
         depends_on: 
             - airflow-backend
@@ -36,8 +36,12 @@ services:
             AIRFLOW_DB_PASSWORD: "${AIRFLOW_DB_PASSWORD}"
             AIRFLOW_DB_DATABASE: "${AIRFLOW_DB_DATABASE}"
             AIRFLOW__CORE__SQL_ALCHEMY_CONN: "postgres://${AIRFLOW_DB_USER}:${AIRFLOW_DB_PASSWORD}@airflow-backend/${AIRFLOW_DB_DATABASE}"
+            POSTGRES_DB: "${POSTGRES_DB}"
+            POSTGRES_USER: "${POSTGRES_USER}"
+            POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
         volumes:
-            - ./dags:/root/airflow/dags
+            - ./src/dags:/root/airflow/dags
+            - ./src/flats_scraper:/root/airflow/src
         ports:
             - "8080:8080"
 

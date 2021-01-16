@@ -3,6 +3,7 @@ from datetime import datetime
 
 import requests
 from lxml import html
+
 from flats_scraper.scraper_model import Link
 
 
