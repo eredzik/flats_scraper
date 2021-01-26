@@ -1,7 +1,5 @@
-# from flats_scraper.get_links import get_ads
-from httmock import HTTMock
-from httmock import urlmatch
 from flats_scraper.get_links import get_ads
+from httmock import HTTMock, urlmatch
 
 
 @urlmatch(netloc=r'(.*\.)?www.olx.pl/nieruchomosci' +

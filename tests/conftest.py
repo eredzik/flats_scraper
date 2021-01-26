@@ -1,7 +1,7 @@
-from sqlalchemy.orm import sessionmaker
+import pytest
 from flats_scraper.scraper_model import Base
 from sqlalchemy import create_engine
-import pytest
+from sqlalchemy.orm import sessionmaker
 
 
 @pytest.fixture(scope="session")
@@ -11,4 +11,4 @@ def session():
     Session = sessionmaker(bind=engine)
     session = Session()
     yield session
-    session.close()
+    # session.close()
