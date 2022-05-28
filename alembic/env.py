@@ -1,7 +1,7 @@
 import os
 from logging.config import fileConfig
 
-from dotenv import find_dotenv, load_dotenv
+# from dotenv import find_dotenv, load_dotenv
 from sqlalchemy import engine_from_config, pool
 
 from alembic import context
@@ -10,17 +10,20 @@ from alembic import context
 # access to the values within the .ini file in use.
 config = context.config
 
-load_dotenv(find_dotenv())
+# load_dotenv(find_dotenv())
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
-fileConfig(config.config_file_name)
+# fileConfig(config.config_file_name)
 section = config.config_ini_section
-config.set_section_option(section, "POSTGRES_USER", os.environ.get("POSTGRES_USER"))
-config.set_section_option(section, "POSTGRES_PASSWORD", os.environ.get("POSTGRES_PASSWORD"))
+# config.set_section_option(section, "POSTGRES_USER", os.environ.get("POSTGRES_USER"))
+# config.set_section_option(
+# section, "POSTGRES_PASSWORD", os.environ.get("POSTGRES_PASSWORD")
+# )
 
 
 import os
+
 # add your model's MetaData object here
 # for 'autogenerate' support
 # from myapp import mymodel

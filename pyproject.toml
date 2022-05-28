@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "flats_scraper"
+version = "0.1.0"
+description = ""
+authors = ["Emil Redzik <emilredzik1994@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+SQLAlchemy = "^1.4.36"
+alembic = "^1.7.7"
+requests = "^2.27.1"
+beautifulsoup4 = "^4.11.1"
+
+[tool.poetry.dev-dependencies]
+black = "^22.3.0"
+mypy = "^0.960"
+pytest = "^7.1.2"
+sqlalchemy2-stubs = "^0.0.2-alpha.22"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

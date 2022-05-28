@@ -1,5 +1,14 @@
-from sqlalchemy import (Column, DateTime, Float, ForeignKey, Integer, MetaData,
-                        String, Unicode, UniqueConstraint)
+from sqlalchemy import (
+    Column,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    MetaData,
+    String,
+    Unicode,
+    UniqueConstraint,
+)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -8,7 +17,7 @@ Base = declarative_base(metadata=metadata)
 
 
 class User(Base):
-    __tablename__ = 'user'
+    __tablename__ = "user"
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(100), nullable=False)
     olx_user_slug = Column(String(100))
@@ -20,9 +29,9 @@ class User(Base):
 
 
 class Advertisement(Base):
-    __tablename__ = 'advertisement'
+    __tablename__ = "advertisement"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    link_id = Column(Integer,  ForeignKey('link.id'))
+    link_id = Column(Integer, ForeignKey("link.id"))
     scraped_time = Column(DateTime)
     title = Column(String(100), nullable=False)
     description = Column(Unicode(50000))
@@ -42,17 +51,19 @@ class Advertisement(Base):
     added_time = Column(DateTime)
     views_number = Column(Integer)
     user_id = Column(Integer, ForeignKey("user.id"))
-    user = relationship("User", backref="user")
+    user: User = relationship("User", backref="user")
 
 
 class Link(Base):
-    __tablename__ = 'link'
+    __tablename__ = "link"
     id = Column(Integer, primary_key=True, autoincrement=True)
     url = Column(String(500), nullable=False)
     first_time_seen = Column(DateTime, nullable=False)
     last_time_scraped = Column(DateTime)
     is_closed = Column(Integer)
     link_type = Column(String(10), nullable=False)
-    advertisement = relationship("Advertisement", backref="advertisements")
+    advertisement: Advertisement = relationship(
+        "Advertisement", backref="advertisements"
+    )
 
     uq_url = UniqueConstraint(url)
